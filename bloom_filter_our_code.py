@@ -62,7 +62,6 @@ class SBF():
         print("correct_predictions - {}\nfalse_positive - {}\nwrong_predictions - {}".format(correct_predictions,false_positive,wrong_predictions))
         return false_positive
 
-
 def get_words_to_add_to_bloom_filter():
     list_of_all_file_paths = glob.glob("{}/*".format("data"))
     list_of_all_file_paths = sorted(list_of_all_file_paths)
@@ -103,8 +102,6 @@ def main():
             print("\n\n")
         plot_graph(x_axis_values, y_axis_values)
         print("*********************")
-
-
 
 if __name__ == "__main__":
     main()
