@@ -1,7 +1,9 @@
+from cProfile import label
 import glob
 import re
 import hashlib
 from collections import OrderedDict
+from subprocess import list2cmdline
 import matplotlib.pyplot as plt
 
 
@@ -59,7 +61,7 @@ class SBF():
                 false_positive+=1
             elif (search_prediction == False) and (word_to_search in self._list_of_words_inserted):
                 wrong_predictions+=1
-        print("correct_predictions - {}\nfalse_positive - {}\nwrong_predictions - {}".format(correct_predictions,false_positive,wrong_predictions))
+        # print("correct_predictions - {}\nfalse_positive - {}\nwrong_predictions - {}".format(correct_predictions,false_positive,wrong_predictions))
         return false_positive
 
 def get_words_to_add_to_bloom_filter():
@@ -78,30 +80,40 @@ def get_words_to_add_to_bloom_filter():
         word_dictionary_to_return[file_path] = list_to_push
     return  sum(list(word_dictionary_to_return.values())[1:],[]), list(word_dictionary_to_return.values())[0],
 
-def plot_graph(x_axis_values, y_axis_values):
-    plt.plot(x_axis_values, y_axis_values)
-    plt.title('Bloom filter')
+def plot_graph(x_axis_values, dictionary_of_filter_size_to_false_positives):
+    for filter_size, y_axis_values in dictionary_of_filter_size_to_false_positives.items():
+        # print(x_axis_values, y_axis_values)
+        plt.plot(x_axis_values, y_axis_values, label = "filter size - {}".format(filter_size))
+    plt.title('Comparison between number of hash functions and false positives in Bloom Filter')
     plt.xlabel('Number of Hash functions')
     plt.ylabel('Number of false positives')
+    plt.legend()
     plt.show()
 
 def main():
     filter_size = 100000
-    for number_of_filter_size in [10000, 100000, 1000000]:
-        print("*********************")
+    list_of_x_axis_values = [i for i in range(1,9)]
+    dictionary_of_filter_size_to_false_positives ={}
+    filter_size_array = [i for i in range(10000,100000,10000)]
+    print(filter_size_array)
+    for number_of_filter_size in filter_size_array:
+        # print("*********************")
         x_axis_values = []
         y_axis_values = []
         for number_of_hashes in range(1,9):
-            print("Bloom filter size - {}, Number of hashes - {}".format(filter_size, number_of_hashes))
+            # print("Bloom filter size - {}, Number of hashes - {}".format(filter_size, number_of_hashes))
             sbf_object = SBF(number_of_filter_size, number_of_hashes)
             word_to_add_to_filter, words_to_search = get_words_to_add_to_bloom_filter()
             sbf_object.add_to_filer_and_set_bits(word_to_add_to_filter)
             search_results = sbf_object.check_if_list_of_words_contain(words_to_search)
             x_axis_values.append(number_of_hashes)
             y_axis_values.append(sbf_object.print_summary(search_results))
-            print("\n\n")
-        plot_graph(x_axis_values, y_axis_values)
-        print("*********************")
+            # print("\n\n")
+        dictionary_of_filter_size_to_false_positives[number_of_filter_size] = y_axis_values
+        
+    # print(list_of_x_axis_values, dictionary_of_filter_size_to_false_positives)
+    plot_graph(list_of_x_axis_values, dictionary_of_filter_size_to_false_positives)
+    print("*********************")
 
 if __name__ == "__main__":
     main()
