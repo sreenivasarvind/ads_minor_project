@@ -88,7 +88,7 @@ def plot_graph(x_axis_values, y_axis_values):
 
 def main():
     filter_size = 100000
-    for number_of_filter_size in [10000, 50000, 100000, 1000000]:
+    for number_of_filter_size in [10000, 100000, 1000000]:
         print("*********************")
         x_axis_values = []
         y_axis_values = []
