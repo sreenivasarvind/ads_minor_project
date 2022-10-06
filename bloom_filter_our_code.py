@@ -95,7 +95,7 @@ def main():
     list_of_x_axis_values = [i for i in range(1,9)]
     dictionary_of_filter_size_to_false_positives ={}
     filter_size_array = [i for i in range(10000,100000,10000)]
-    print(filter_size_array)
+    # print(filter_size_array)
     for number_of_filter_size in filter_size_array:
         # print("*********************")
         x_axis_values = []
