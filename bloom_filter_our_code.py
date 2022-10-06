@@ -57,7 +57,7 @@ class SBF():
                 correct_predictions+=1
             elif (search_prediction == True) and (word_to_search not in self._list_of_words_inserted):
                 false_positive+=1
-            elif (search_prediction==False) and (word_to_search in self._list_of_words_inserted):
+            elif (search_prediction == False) and (word_to_search in self._list_of_words_inserted):
                 wrong_predictions+=1
         print("correct_predictions - {}\nfalse_positive - {}\nwrong_predictions - {}".format(correct_predictions,false_positive,wrong_predictions))
         return false_positive
