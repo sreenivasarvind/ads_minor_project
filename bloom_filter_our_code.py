@@ -54,7 +54,7 @@ def implement_standard_bloom_filter():
     print("*********************")
 
 def implement_one_hash_bloom_filter():
-    list_of_x_axis_values = [i for i in range(2,9)]
+    list_of_x_axis_values = [i for i in range(7,9)]
     dictionary_of_filter_size_to_false_positives ={}
     filter_size_array = [i for i in range(10000,100000,10000)]
     # print(filter_size_array)
@@ -76,5 +76,5 @@ def implement_one_hash_bloom_filter():
     print("*********************")
 
 if __name__ == "__main__":
-    implement_standard_bloom_filter()
+    # implement_standard_bloom_filter()
     implement_one_hash_bloom_filter()

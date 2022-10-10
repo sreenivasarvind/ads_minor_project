@@ -3,6 +3,7 @@ from collections import OrderedDict
 import glob
 import re
 import matplotlib.pyplot as plt
+from partitions import get_partition_size
 
 class OHBF():
     def __init__(self, bit_size, number_of_mods = 3):
@@ -15,13 +16,22 @@ class OHBF():
         indexes_to_set = []
         hash_value = int.from_bytes(hashlib.md5(("{}".format(text_to_hash)).encode('UTF-8')).digest(), 'little')
         partition_beginning_index = []
+        list_of_mod_values =  get_partition_size(self._size_of_bit_array, self._number_of_mods)
+
+        sum =0
+        for indv_mod_value in list_of_mod_values:
+            sum+= indv_mod_value
+            partition_beginning_index.append(sum)
+        print(list_of_mod_values, partition_beginning_index)
+        print("\n\n")
+
 
         # Arvind - add your code to effectively split the bit array size into self._number_of_mods prime parts
-        for index_position in range(self._number_of_mods):
-            if index_position != self._number_of_mods-1 and index_position==0:
-                partition_beginning_index.append(int(self._size_of_bit_array/self._number_of_mods))
-            elif index_position != self._number_of_mods-1:
-                partition_beginning_index.append(partition_beginning_index[index_position-1]+int(self._size_of_bit_array/self._number_of_mods))
+        # for index_position in range(self._number_of_mods):
+        #     if index_position != self._number_of_mods-1 and index_position==0:
+        #         partition_beginning_index.append(int(self._size_of_bit_array/self._number_of_mods))
+        #     elif index_position != self._number_of_mods-1:
+        #         partition_beginning_index.append(partition_beginning_index[index_position-1]+int(self._size_of_bit_array/self._number_of_mods))
 
         # print(partition_beginning_index)
         list_of_mod_values = [partition_beginning_index[0]] + [partition_beginning_index[i+1]-partition_beginning_index[i] for i in range(len(partition_beginning_index)-1)]
@@ -108,7 +118,7 @@ def main():
         # print("*********************")
         x_axis_values = []
         y_axis_values = []
-        for number_of_mods in range(2,9):
+        for number_of_mods in range(2,2):
             # print("Bloom filter size - {}, Number of hashes - {}".format(filter_size, number_of_mods))
             sbf_object = OHBF(number_of_filter_size, number_of_mods)
             word_to_add_to_filter, words_to_search = get_words_to_add_to_bloom_filter()
