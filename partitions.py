@@ -61,5 +61,5 @@ def prime(x, y):
 # #m_p = size of bloom filter, k = no. of paritions
 # paritions_sizes =get_partition_size(m_p=10000, k=10, p_table = p_table)
 
-
+ 
 # print(paritions_sizes)
