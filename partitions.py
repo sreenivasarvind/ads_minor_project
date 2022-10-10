@@ -19,7 +19,7 @@ def prime(x, y):
 	return prime_list
 
 def get_partition_size(m_p,k):
-    p_table = prime(2,15000000)
+    p_table = prime(2,101000)
     p_idx = get_closest(p_table, m_p/k)
     sum = 0
     m_f = 0

@@ -16,8 +16,10 @@ class OHBF():
         indexes_to_set = []
         hash_value = int.from_bytes(hashlib.md5(("{}".format(text_to_hash)).encode('UTF-8')).digest(), 'little')
         partition_beginning_index = []
+        print("Before, {},{}".format(self._size_of_bit_array, self._number_of_mods))
         list_of_mod_values =  get_partition_size(self._size_of_bit_array, self._number_of_mods)
-
+        print("after")
+        print("\n")
         sum =0
         for indv_mod_value in list_of_mod_values:
             sum+= indv_mod_value
